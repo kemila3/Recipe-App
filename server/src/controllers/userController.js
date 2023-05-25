@@ -18,11 +18,22 @@ export const registerUser = async (req, res) => {
   res.status(200).json({ newUser, message: "New user registered" });
 };
 
-export const loginUser = async (req, res) => {
-    const user = await User.findOne({username})
+// POST method to login a user
 
-    if(user){
-        res.status(500).json({message: "User already exists"})
-    }
-    res.status()
+export const loginUser = async (req, res) => {
+  const { username, password } = req.body;
+  const user = await User.findOne({ username });
+
+  if (!user) {
+    res.status(500).json({ message: "User doesn't exists" });
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    return res
+      .status(404)
+      .json({ message: "Username or password is incorrect" });
+  }
+  const token = await jwt.sign({ id: user._id }, "secret");
+  res.status(200).json({ token, userID: user.__id });
 };
