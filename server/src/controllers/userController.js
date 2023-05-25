@@ -19,7 +19,6 @@ export const registerUser = async (req, res) => {
 };
 
 // POST method to login a user
-
 export const loginUser = async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username });
