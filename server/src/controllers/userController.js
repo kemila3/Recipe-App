@@ -34,5 +34,5 @@ export const loginUser = async (req, res) => {
       .json({ message: "Username or password is incorrect" });
   }
   const token = await jwt.sign({ id: user._id }, "secret");
-  res.status(200).json({ token, userID: user.__id });
+  res.status(200).json({ token, userID: user._id });
 };
