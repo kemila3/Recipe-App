@@ -1,4 +1,4 @@
 export const SaveRecipes = () => {
-    return <div>SaveRecipes</div>;
+    return <div>Save Recipes</div>;
   };
   
