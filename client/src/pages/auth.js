@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 
 export const Auth = () => {
   return (
@@ -28,7 +29,7 @@ const Register = () => {
       console.log(err);
     }
   };
-  
+
   return (
     <Form
       username={username}
@@ -45,7 +46,22 @@ const Register = () => {
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [ _,setCookies] = useCookies(["access_token"])
 
+  const onSubmit = async (event) => {
+    event.preventDefault()
+
+    try {
+      const response = await axios.post("http://localhost:3001/auth/login", {
+        username,
+        password,
+      });
+      setCookies("access_token", response.data.token)
+    } catch (err) {
+      console.log(err)
+    }
+   
+  };
   return (
     <Form
       username={username}
@@ -53,6 +69,7 @@ const Login = () => {
       password={password}
       setPassword={setPassword}
       label="Login"
+      onSubmit={onSubmit}
     />
   );
 };
