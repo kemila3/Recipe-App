@@ -1,7 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { mongo } from "mongoose";
 import { User } from "../models/userModel.js";
 
 // POST method to register a user
